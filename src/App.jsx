@@ -14,7 +14,8 @@ function App() {
   const[error, setErr] = useState("")
   const [loading, setLoading] = useState(true);
   const didInit = useRef(false);
-  const [topTracks, setTopTrack] = useState();
+  const [topTracks, setTopTrack] = useState([]);
+  const [showSaved, setShowSaved] = useState(false);
 
   async function loadTopTracks() {
   try {
@@ -89,14 +90,37 @@ function App() {
         </button>
       )}
     </section>
-    {topTracks && (
-      <div>
-        <h2>Top tracks</h2>
-      <div>
-        <strong>{topTracks.name}</strong>
-        
+
+    {user && (
+  <section style={styles.panel}>
+    <button
+      style={styles.panelHeader}
+      onClick={() => setShowSaved(v => !v)}
+      aria-expanded={showSaved}
+    >
+      <span>My saved tracks</span>
+      <span style={styles.chevron}>{showSaved ? "▾" : "▸"}</span>
+    </button>
+
+    {showSaved && (
+      <div style={styles.panelBody}>
+        <button style={styles.secondaryBtn} onClick={loadTopTracks}>
+          Load latest 20
+        </button>
+
+        {topTracks.length > 0 && (
+          <ul style={styles.list}>
+            {topTracks.map(t => (
+              <li key={t.track.id} style={styles.listItem}>
+                <span style={styles.trackName}>{t.track.name}</span>
+               
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
-      </div>
+    )}
+  </section>
       
 
     )}
@@ -155,6 +179,45 @@ const styles = {
     cursor: "pointer",
     width: "100%",
   },
+  panel: {
+  marginTop: 18,
+  width: "100%",
+  borderRadius: 14,
+  overflow: "hidden",
+  border: "1px solid rgba(255,255,255,0.10)",
+  background: "rgba(255,255,255,0.05)",
+},
+panelHeader: {
+  width: "100%",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  padding: "12px 14px",
+  background: "rgba(255,255,255,0.03)",
+  border: "none",
+  color: "inherit",
+  cursor: "pointer",
+  fontWeight: 700,
+},
+chevron: { opacity: 0.8 },
+panelBody: { padding: 14 },
+secondaryBtn: {
+  padding: "10px 12px",
+  borderRadius: 10,
+  border: "1px solid rgba(255,255,255,0.14)",
+  background: "rgba(255,255,255,0.08)",
+  color: "inherit",
+  cursor: "pointer",
+  fontWeight: 600,
+},
+list: { listStyle: "none", padding: 0, margin: "12px 0 0" },
+listItem: {
+  padding: "10px 0",
+  borderBottom: "1px solid rgba(255,255,255,0.08)",
+},
+trackName: { display: "block", fontWeight: 700 },
+trackMeta: { display: "block", opacity: 0.8, fontSize: 13, marginTop: 2 },
+
 
   
 };

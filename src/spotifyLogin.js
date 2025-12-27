@@ -1,7 +1,7 @@
 // spotifyLogin.js
 const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID; 
 const REDIRECT_URI = "http://127.0.0.1:5173/#callback";
-const SCOPES = ["user-read-email", "user-read-private"];
+const SCOPES = ["user-read-email", "user-read-private","user-library-read"];
 
 function rand(len) {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
