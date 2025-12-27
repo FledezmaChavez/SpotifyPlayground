@@ -32,12 +32,17 @@ function App() {
       //getMe().then(setUser).catch(e => setErr(e.message));
       async function Init(){
 
-        //two stop the double call in dev mode 
-        if(didInit.current)return; 
+        //two stop the double call in dev mode
+        if(didInit.current)return;
         didInit.current = true;
 
         try{
           await handleSpotifyCallback();
+
+          const storedToken = sessionStorage.getItem("spotify_access_token");
+          if(!storedToken){
+            return;
+          }
 
           const me = await getMe();
           setUser(me);
