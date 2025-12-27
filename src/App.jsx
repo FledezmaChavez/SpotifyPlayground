@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { handleSpotifyCallback } from "./spotifyCallBack";
-import {loginWithSpotify} from './spotifyLogin'
+import { handleSpotifyCallback, loginWithSpotify } from "./spotifyAuth";
 import { getMe } from './getMe';
 import {refreshAccessToken} from './spotifyRefresh'
 import {getTopTrack} from './spotifyAPI'
@@ -11,7 +10,7 @@ import {getTopTrack} from './spotifyAPI'
 function App() {
 
   const[user, setUser]= useState(null);
-  const[error, setErr] = useState("")
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const didInit = useRef(false);
   const [topTracks, setTopTrack] = useState([]);
@@ -22,7 +21,7 @@ function App() {
     const track = await getTopTrack();
     setTopTrack(track);
   } catch (e) {
-    alert(e.message);
+    setError(e.message);
   }
 }
 
@@ -33,24 +32,33 @@ function App() {
       //getMe().then(setUser).catch(e => setErr(e.message));
       async function Init(){
 
-        //two stop the double call in dev mode 
-        if(didInit.current)return; 
+        //two stop the double call in dev mode
+        if(didInit.current)return;
         didInit.current = true;
 
-        await handleSpotifyCallback();
-
         try{
-          const me = await getMe(); 
+          await handleSpotifyCallback();
+
+          const storedToken = sessionStorage.getItem("spotify_access_token");
+          if(!storedToken){
+            return;
+          }
+
+          const me = await getMe();
           setUser(me);
         }catch(e){
           if(e.message.includes("401")){
-            await refreshAccessToken(); 
-            const me = await getMe();
-            setUser(me);
+            try{
+              await refreshAccessToken();
+              const me = await getMe();
+              setUser(me);
+            }catch(refreshError){
+              setError(refreshError.message);
+            }
           }else{
-            throw e;
+            setError(e.message);
           }
-          
+
         }finally{
           setLoading(false)
         }
