@@ -1,5 +1,5 @@
 // spotifyApi.js
-export async function getTracks() {
+export async function getTracks(limit = 20) {
   const token = sessionStorage.getItem("spotify_access_token");
   if (!token) throw new Error("No access token.");
 
@@ -11,7 +11,7 @@ export async function getTracks() {
   // );
 
   const res = await fetch(
-    "https://api.spotify.com/v1/me/tracks/?limit=50",
+    `https://api.spotify.com/v1/me/tracks/?limit=${limit}`,
     {
       headers: { Authorization: `Bearer ${token}` },
     }
