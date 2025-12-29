@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { getTracks } from './spotifyAPI'
 import { useSpotifySession } from './hooks/useSpotifySession';
+import { WelcomeComponent } from './components/WelcomeComponent';
 import './App.css'
 
 
@@ -29,15 +30,9 @@ function App() {
     <>
       <main class="page">
         <section className="card">
-          <h1 class="title">
-            Welcome{user ? `, ${user.display_name}` : ""}
-          </h1>
 
-          <p class="subtitle">
-            {isAuthenticated
-              ? "You’re authenticated. Let’s build something fun."
-              : "Authenticate to pull your Spotify profile."}
-          </p>
+          <WelcomeComponent user={user} isAuthenticated={isAuthenticated} />
+
           {user && (
             <button class="button" onClick={loadTopTracks}>
               My top song
@@ -57,7 +52,7 @@ function App() {
               onClick={logout}
               className='logout-btn'
             >
-              ×
+              X
             </button>
           )}
 
