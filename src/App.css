@@ -22,6 +22,7 @@
   box-shadow: 0 18px 60px rgba(0,0,0,0.45);
   backdrop-filter: blur(10px);
   text-align: center;
+  position: relative;
 }
 .title {
   margin: 0;
@@ -101,5 +102,39 @@
   margin-top: 2px;
 }
 
+.logout-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  width: 34px;
+  height: 34px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+
+  color: rgba(232, 238, 246, 0.9);
+  font-size: 18px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background 120ms ease,
+    transform 120ms ease,
+    border-color 120ms ease;
+}
 
 
+.logout-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.logout-btn:active {
+  transform: scale(0.96);
+}
