@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { getTracks } from "../spotifyAPI";
 import '../App.css'
+import { TrackItemComponent } from "./TrackItemComponent";
 
 export function TopTracksComponent() {
 
@@ -41,12 +42,8 @@ export function TopTracksComponent() {
 
             {topTracks.length > 0 && (
                 <ul className="list">
-                    {topTracks.map(t => (
-                        <li key={t.track.id} className="listItem">
-                            <span className="trackName">{t.track.name}</span>
-                            <span className="trackMeta">{t.track.artists.map(a => a.name).join(", ")}</span>
-                        </li>
-                    ))}
+                  
+                    {topTracks.map(t => <TrackItemComponent track={t.track} />)}
                 </ul>
             )}
         </div>

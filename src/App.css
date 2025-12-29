@@ -27,7 +27,7 @@
   align-items: flex-start; /* top aligned so it doesn't float weird */
 }
 .card {
-  width: min(520px, 92vw);
+
   padding: 28px 26px;
   border-radius: 18px;
   background: rgba(255,255,255,0.06);
