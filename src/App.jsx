@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { getTracks } from './spotifyAPI'
 import { useSpotifySession } from './hooks/useSpotifySession';
 import { WelcomeComponent } from './components/WelcomeComponent';
+import { TopTracksComponent } from './components/TopTracksComponent';
 import './App.css'
 
 
@@ -9,17 +10,10 @@ import './App.css'
 
 function App() {
 
-  const [topTracks, setTopTrack] = useState([]);
+  
   const [showSaved, setShowSaved] = useState(false);
 
-  async function loadTopTracks() {
-    try {
-      const track = await getTracks();
-      setTopTrack(track);
-    } catch (e) {
-      setError(e.message);
-    }
-  }
+
 
   const { user, status, error, isAuthenticated, login, logout } = useSpotifySession();
 
@@ -33,14 +27,10 @@ function App() {
 
           <WelcomeComponent user={user} isAuthenticated={isAuthenticated} />
 
-          {user && (
-            <button class="button" onClick={loadTopTracks}>
-              My top song
-            </button>
-          )}
+
 
           {!isAuthenticated && (
-            <button class="button" onClick={login}>
+            <button className="button" onClick={login}>
               Continue with Spotify
             </button>
           )}
@@ -57,13 +47,13 @@ function App() {
           )}
 
 
-          {error && <div style={styles.errorBox}>{error}</div>}
+          {error && <div className="errorBox">{error}</div>}
         </section>
 
         {isAuthenticated && (
           <section className="panel">
             <button
-              class="panelHeader"
+              className="panelHeader"
               onClick={() => setShowSaved(v => !v)}
               aria-expanded={showSaved}
             >
@@ -72,22 +62,8 @@ function App() {
             </button>
 
             {showSaved && (
-              <div className="panelBody">
-                <button className="secondaryBtn" onClick={loadTopTracks}>
-                  Load latest 20
-                </button>
-
-                {topTracks.length > 0 && (
-                  <ul className="list">
-                    {topTracks.map(t => (
-                      <li key={t.track.id} className="listItem">
-                        <span className="trackName">{t.track.name}</span>
-                        <span className="trackMeta">{t.track.artists.map(a => a.name).join(", ")}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
+              //here goes the top track component
+              <TopTracksComponent />
             )}
           </section>
 
