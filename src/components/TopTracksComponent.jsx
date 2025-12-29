@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { getTracks } from "../spotifyAPI";
+import '../App.css'
 
 export function TopTracksComponent() {
 
     const [error, setError] = useState(null);
     const [topTracks, setTopTrack] = useState([]);
+    const topTracksLimit = getTopTrackLimits();
+    const [limit,setLimit] = useState(5);
 
-    async function loadTopTracks(limit = 20) {
+    async function loadTopTracks() {
         try {
             const track = await getTracks(limit);
             setTopTrack(track);
@@ -19,9 +22,20 @@ export function TopTracksComponent() {
     return (
         <div className="panelBody">
             {/* This to refactor this to get rid of the default value */}
-            <button className="secondaryBtn" onClick={()=>loadTopTracks(5)}>
-                Load latest 20
-            </button>
+            <h3>Select how many saved tracks to retrieve:</h3>
+            <div className="tracks-controls ">
+          <div className="btn-group">
+            {topTracksLimit.map(l => (
+                <button key={l} 
+                className={`btn-group-item ${limit === l ? "active":""}`}
+                onClick={()=> setLimit(l)}>
+                    {l}
+                </button>
+            ))}
+          </div>
+          <div><button className="primary-btn" onClick={loadTopTracks}>Get Tracks!</button></div>
+
+            </div>
 
             {error && <div className="errorBox">{error}</div>}
 
@@ -38,4 +52,8 @@ export function TopTracksComponent() {
         </div>
     );
 
+}
+
+function getTopTrackLimits(){
+    return [5,10,20,50,100];
 }
