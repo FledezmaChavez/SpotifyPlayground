@@ -23,53 +23,53 @@ function App() {
     <>
       <main class="page">
         <div className="app-column">
-        <section className="card">
+          <section className="card">
 
-          <WelcomeComponent user={user} isAuthenticated={isAuthenticated} />
-
-
-
-          {!isAuthenticated && (
-            <button className="button" onClick={login}>
-              Continue with Spotify
-            </button>
-          )}
-
-          {isAuthenticated && (
-            <button
-              aria-label="Logout"
-              title="Logout"
-              onClick={logout}
-              className='logout-btn'
-            >
-              X
-            </button>
-          )}
+            <WelcomeComponent user={user} isAuthenticated={isAuthenticated} />
 
 
-          {error && <div className="errorBox">{error}</div>}
-        </section>
 
-        {isAuthenticated && (
-          <section className="panel">
-            <button
-              className="panelHeader"
-              onClick={() => setShowSaved(v => !v)}
-              aria-expanded={showSaved}
-            >
-              <span>My saved tracks</span>
-              <span class="chevron">{showSaved ? "▾" : "▸"}</span>
-            </button>
-
-            {showSaved && (
-
-              <TopTracksComponent />
+            {!isAuthenticated && (
+              <button className="button" onClick={login}>
+                Continue with Spotify
+              </button>
             )}
+
+            {isAuthenticated && (
+              <button
+                aria-label="Logout"
+                title="Logout"
+                onClick={logout}
+                className='logout-btn'
+              >
+                X
+              </button>
+            )}
+
+
+            {error && <div className="errorBox">{error}</div>}
           </section>
 
+          {isAuthenticated && (
+            <section className="panel">
+              <button
+                className="panelHeader"
+                onClick={() => setShowSaved(v => !v)}
+                aria-expanded={showSaved}
+              >
+                <span>My saved tracks</span>
+                <span class="chevron">{showSaved ? "▾" : "▸"}</span>
+              </button>
 
-        )}
-    </div>
+              {showSaved && (
+
+                <TopTracksComponent />
+              )}
+            </section>
+
+
+          )}
+        </div>
       </main>
 
     </>
