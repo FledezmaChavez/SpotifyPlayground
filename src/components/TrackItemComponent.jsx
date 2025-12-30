@@ -1,10 +1,12 @@
 
 
 export function TrackItemComponent({track}) {
+    const {id,name, artists} = track;
+
     return (
-        <li key={track.id} className="listItem">
-            <span className="trackName">{track.name}</span>
-            <span className="trackMeta">{track.artists.map(a => a.name).join(", ")}</span>
+        <li key={id} className="listItem">
+            <span className="trackName">{name}</span>
+            <span className="trackMeta">{artists.map(a => a.name).join(", ")}</span>
         </li>
     );
 }

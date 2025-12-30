@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { getTracks } from "../spotifyAPI";
+import { TrackListComponent } from "./TrackListComponent";
+
 import '../App.css'
-import { TrackItemComponent } from "./TrackItemComponent";
+
 
 export function TopTracksComponent() {
 
@@ -40,12 +42,7 @@ export function TopTracksComponent() {
 
             {error && <div className="errorBox">{error}</div>}
 
-            {topTracks.length > 0 && (
-                <ul className="list">
-                  
-                    {topTracks.map(t => <TrackItemComponent track={t.track} />)}
-                </ul>
-            )}
+            <TrackListComponent tracks={topTracks}/>
         </div>
     );
 
