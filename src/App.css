@@ -159,6 +159,11 @@
     border: "1px solid rgba(255, 80, 80, 0.18)";
   }
 
+.loadingMessage {
+  margin-top: 12px;
+  font-weight: 700;
+}
+
   .btn-group {
   display: inline-flex;
   border-radius: 10px;

@@ -16,7 +16,8 @@ export default function useTopTracks() {
             const tracks = await getTracks(limit);
             setTopTracks(tracks);
         } catch (e) {
-            setError(e.message);
+            setTopTracks([]);
+            setError(e.message || "Failed to load tracks");
         } finally {
             setLoading(false);
         }

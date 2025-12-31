@@ -38,6 +38,12 @@ export function TopTracksComponent() {
 
             {error && <div className="errorBox">{error}</div>}
 
+            {loading && (
+                <div role="status" className="loadingMessage">
+                    Fetching your top tracks...
+                </div>
+            )}
+
             {!loading && <TrackListComponent tracks={topTracks} />}
         </div>
     );
