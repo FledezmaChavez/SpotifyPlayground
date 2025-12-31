@@ -1,41 +1,50 @@
 import { useState } from "react";
-import { getTracks } from "../spotifyAPI";
+import { TrackListComponent } from "./TrackListComponent";
+import useTopTracks from "../hooks/useTopTracks";
+import "../App.css";
+
+const TOP_TRACKS_LIMITS = [5, 10, 20, 50, 100];
 
 export function TopTracksComponent() {
-
-    const [error, setError] = useState(null);
-    const [topTracks, setTopTrack] = useState([]);
-
-    async function loadTopTracks(limit = 20) {
-        try {
-            const track = await getTracks(limit);
-            setTopTrack(track);
-        } catch (e) {
-            setError(e.message);
-        }
-    }
-
+    const { topTracks, loadTopTracks, error, loading } = useTopTracks();
+    const [limit, setLimit] = useState(TOP_TRACKS_LIMITS[0]);
 
     return (
         <div className="panelBody">
-            {/* This to refactor this to get rid of the default value */}
-            <button className="secondaryBtn" onClick={()=>loadTopTracks(5)}>
-                Load latest 20
-            </button>
+            <h3>Saved tracks to retrieve:</h3>
+            <div className="tracks-controls ">
+                <div className="btn-group">
+                    {TOP_TRACKS_LIMITS.map((l) => (
+                        <button
+                            key={l}
+                            className={`btn-group-item ${limit === l ? "active" : ""}`}
+                            onClick={() => setLimit(l)}
+                            disabled={loading}
+                        >
+                            {l}
+                        </button>
+                    ))}
+                </div>
+                <div>
+                    <button
+                        className="primary-btn"
+                        onClick={() => loadTopTracks(limit)}
+                        disabled={loading}
+                    >
+                        {loading ? "Loading Tracks..." : "Get Tracks!"}
+                    </button>
+                </div>
+            </div>
 
             {error && <div className="errorBox">{error}</div>}
 
-            {topTracks.length > 0 && (
-                <ul className="list">
-                    {topTracks.map(t => (
-                        <li key={t.track.id} className="listItem">
-                            <span className="trackName">{t.track.name}</span>
-                            <span className="trackMeta">{t.track.artists.map(a => a.name).join(", ")}</span>
-                        </li>
-                    ))}
-                </ul>
+            {loading && (
+                <div role="status" className="loadingMessage">
+                    Fetching your top tracks...
+                </div>
             )}
+
+            {!loading && <TrackListComponent tracks={topTracks} />}
         </div>
     );
-
 }

@@ -1,3 +1,11 @@
+.app-column {
+ width: 100%;
+  max-width: 520px;   /* same as your card */
+  display: flex;
+  flex-direction: column;
+  gap: 28px;    
+   width: min(520px, 92vw);      /* space between card and panel */
+}
 
 
 /* CSS-friendly version of the above JS styles */
@@ -12,9 +20,14 @@
     linear-gradient(180deg, #0b0f14, #0a0a0a);
   color: #e8eef6;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  min-height: 100vh;
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* top aligned so it doesn't float weird */
 }
 .card {
-  width: min(520px, 92vw);
+
   padding: 28px 26px;
   border-radius: 18px;
   background: rgba(255,255,255,0.06);
@@ -49,7 +62,6 @@
 }
 .panel {
   margin-top: 18px;
-  width: 100%;
   border-radius: 14px;
   overflow: hidden;
   border: 1px solid rgba(255,255,255,0.10);
@@ -146,3 +158,103 @@
     background: "rgba(255, 80, 80, 0.12)";
     border: "1px solid rgba(255, 80, 80, 0.18)";
   }
+
+.loadingMessage {
+  margin-top: 12px;
+  font-weight: 700;
+}
+
+  .btn-group {
+  display: inline-flex;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  margin-bottom: 12px;
+}
+
+.btn-group-item {
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(232, 238, 246, 0.85);
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 120ms ease;
+}
+
+.btn-group-item + .btn-group-item {
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.btn-group-item:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.btn-group-item.active {
+  background: rgba(29, 185, 84, 0.95);
+  color: #051007;
+}
+
+
+.tracks-controls {
+  display: flex;
+  align-items: center;
+  gap: 14px; /* this creates the space you want */
+  margin-bottom: 12px;
+}
+
+.primary-btn {
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(29, 185, 84, 0.9);
+  background: rgba(29, 185, 84, 0.95);
+
+  color: #051007;
+  font-weight: 700;
+  cursor: pointer;
+
+  transition:
+    background 120ms ease,
+    transform 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.primary-btn:hover {
+  background: rgba(29, 185, 84, 1);
+  box-shadow: 0 6px 18px rgba(29, 185, 84, 0.35);
+}
+
+.primary-btn:active {
+  transform: scale(0.97);
+}
+
+.card,
+.tracks-panel {
+  width: 100%;
+
+}
+
+.tracks-panel {
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+}
+
+
+
+
+.panelHeader {
+  width: 100%;
+}
+
+.panel {
+  width: 100%;
+   border-radius: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+}
+.card { width: 100%; }
