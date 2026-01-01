@@ -406,3 +406,38 @@
   outline-offset: 3px;
   border-radius: 8px;
 }
+
+/* Scroll container inside the panel */
+.listScroll {
+  max-height: 360px;      /* tweak to taste */
+  overflow: auto;
+  padding-right: 6px;     /* avoids scrollbar overlaying content (Win) */
+}
+
+/* Sticky header */
+.listHeader {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
+  background: rgba(11, 15, 20, 0.92); /* matches your dark bg */
+  backdrop-filter: blur(10px);
+
+  padding: 10px 0;
+  margin: 0; /* remove margin-bottom since it's sticky */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+/* Optional: nicer scrollbar (Chrome/Edge) */
+.listScroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.listScroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+}
+
+.listScroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
