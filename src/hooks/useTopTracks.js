@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { getTracks } from "../spotifyAPI";
+import { spotifyRawToTrack } from "../../models/trackMapper";
+
 
 const DEFAULT_LIMIT = 5;
 
@@ -13,7 +15,8 @@ export default function useTopTracks() {
         setLoading(true);
 
         try {
-            const tracks = await getTracks(limit);
+            const spotifyTracks = await getTracks(limit);
+            const tracks = spotifyTracks.map(st=> spotifyRawToTrack(st.track));
             setTopTracks(tracks);
         } catch (e) {
             setTopTracks([]);

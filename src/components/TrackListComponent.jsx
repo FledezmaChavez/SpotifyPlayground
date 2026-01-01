@@ -5,7 +5,7 @@ export function TrackListComponent({ tracks }) {
         <div>
             <ul className="list">
                 {tracks.map((t) => (
-                    <TrackItemComponent key={t.track.id} track={t.track} />
+                    <TrackItemComponent key={t.id} track={t} />
                 ))}
             </ul>
         </div>
