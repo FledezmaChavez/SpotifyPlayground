@@ -10,7 +10,7 @@ function formatMS(ms){
 
 
 export function TrackItemComponent({track}) {
-    const {title, artistsText, albumImageUrl, durationMs} = track;
+    const {title, artistsText, albumImageUrl, durationMs,spotifyUrl} = track;
 
     return (
         <li className="listItem" role="row" aria-label={title}>
@@ -23,9 +23,17 @@ export function TrackItemComponent({track}) {
             </div>
 
             <div className="col titleCol">
-                <span className="trackName" title={title}>
-                    {title}
+                {spotifyUrl ? 
+                (
+                    <a className="trackLink" href={spotifyUrl} target="_blank" rel="noreferrer" title="Open in Spotify">
+                        <span className="trackName" title={title}>
+                        {title}
                 </span>
+                    </a>
+                )
+                : <span className="trackName">{title}</span>
+                }
+                
             </div>
 
             <div className="col artistCol">

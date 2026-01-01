@@ -11,6 +11,6 @@ export const spotifyRawToTrack = (track) => {
         albumTitle: albumName,
         albumImageUrl: albumImageUrl,
         durationMs: duration_ms,
-        spotifyUrl: external_urls,
+        spotifyUrl: external_urls?.spotify ?? "",
     };
 };
