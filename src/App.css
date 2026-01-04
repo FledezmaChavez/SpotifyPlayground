@@ -258,3 +258,186 @@
   padding: 20px;
 }
 .card { width: 100%; }
+
+/* Wrap: header + list */
+.trackList {
+  margin-top: 12px;
+}
+
+/* Header row */
+.listHeader {
+  display: grid;
+  grid-template-columns: 44px 1.4fr 1.1fr 64px;
+  gap: 12px;
+  align-items: center;
+
+  padding: 8px 0;
+  margin-bottom: 6px;
+
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  opacity: 0.7;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.hCol {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hTime {
+  text-align: right;
+}
+
+/* List items as grid rows */
+.listItem {
+  display: grid;
+  grid-template-columns: 44px 1.4fr 1.1fr 64px;
+  gap: 12px;
+  align-items: center;
+
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  transition: background 120ms ease, transform 120ms ease;
+}
+
+.listItem:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Columns */
+.col {
+  min-width: 0; /* allows ellipsis */
+}
+
+.timeCol {
+  text-align: right;
+}
+
+/* Album art */
+.albumArt,
+.albumArtFallback {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.albumArt {
+  object-fit: cover;
+}
+
+.albumArtFallback {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Text truncation */
+.trackName,
+.trackMeta {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trackName {
+  font-weight: 800;
+}
+
+.trackMeta {
+  opacity: 0.85;
+  font-size: 13px;
+}
+
+.trackTime {
+  opacity: 0.85;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Empty state */
+.listEmpty {
+  margin-top: 10px;
+  opacity: 0.8;
+  font-size: 14px;
+}
+
+.trackLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  color: inherit;
+  text-decoration: none;
+  min-width: 0; /* keeps ellipsis working */
+}
+
+.trackLink .trackName {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.openIcon {
+  opacity: 0;
+  transform: translateX(-2px);
+  transition: opacity 120ms ease, transform 120ms ease;
+  font-size: 13px;
+}
+
+.listItem:hover .openIcon,
+.trackLink:focus-visible .openIcon {
+  opacity: 0.85;
+  transform: translateX(0);
+}
+
+.trackLink:hover .trackName {
+  text-decoration: underline;
+  text-decoration-color: rgba(255,255,255,0.35);
+}
+
+.trackLink:focus-visible {
+  outline: 2px solid rgba(29,185,84,0.55);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+/* Scroll container inside the panel */
+.listScroll {
+  max-height: 360px;      /* tweak to taste */
+  overflow: auto;
+  padding-right: 6px;     /* avoids scrollbar overlaying content (Win) */
+}
+
+/* Sticky header */
+.listHeader {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
+  background: rgba(11, 15, 20, 0.92); /* matches your dark bg */
+  backdrop-filter: blur(10px);
+
+  padding: 10px 0;
+  margin: 0; /* remove margin-bottom since it's sticky */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+/* Optional: nicer scrollbar (Chrome/Edge) */
+.listScroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.listScroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+}
+
+.listScroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
