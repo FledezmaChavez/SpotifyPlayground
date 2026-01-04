@@ -12,5 +12,5 @@ export async function getTracks(limit = 20) {
 
   if (!res.ok) throw new Error(`Top tracks failed: ${res.status}`);
   const data = await res.json();
-  return data.items ?? null;
+  return data.items ?? [];
 }
