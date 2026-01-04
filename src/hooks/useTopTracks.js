@@ -14,7 +14,7 @@ export default function useTopTracks() {
 
     async function loadTopTracks(limit = DEFAULT_LIMIT) {
         setError(null);
-        setLoading(true);
+        
 
         if (cacheTopTracks.current.has(limit)) {
             let cachedTracks = cacheTopTracks.current.get(limit)
@@ -24,6 +24,7 @@ export default function useTopTracks() {
         }
 
         try {
+            setLoading(true);
             const spotifyTracks = await getTracks(limit);
             const tracks = spotifyTracks.map(st => spotifyRawToTrack(st.track));
             cacheTopTracks.current.set(limit, tracks)
