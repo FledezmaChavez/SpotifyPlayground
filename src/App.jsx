@@ -21,7 +21,7 @@ function App() {
 
   return (
     <>
-      <main class="page">
+      <main className="page">
         <div className="app-column">
           <section className="card">
 
@@ -58,7 +58,7 @@ function App() {
                 aria-expanded={showSaved}
               >
                 <span>My saved tracks</span>
-                <span class="chevron">{showSaved ? "▾" : "▸"}</span>
+                <span className="chevron">{showSaved ? "▾" : "▸"}</span>
               </button>
 
               {showSaved && (
