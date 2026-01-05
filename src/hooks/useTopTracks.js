@@ -4,6 +4,7 @@ import { spotifyRawToTrack } from "../../models/trackMapper";
 
 
 const DEFAULT_LIMIT = 5;
+const TTL = 1000 * 60 * 2; // 2 min
 
 
 export default function useTopTracks() {
@@ -14,12 +15,12 @@ export default function useTopTracks() {
 
     async function loadTopTracks(limit = DEFAULT_LIMIT) {
         setError(null);
-        
 
-        if (cacheTopTracks.current.has(limit)) {
-            let cachedTracks = cacheTopTracks.current.get(limit)
-            setTopTracks([...cachedTracks])
-            setLoading(false);
+        const cached = cacheTopTracks.current.get(limit)
+
+        if (cached && (Date.now() - cached.cachedAt) < TTL) {
+            let { tracks } = cached
+            setTopTracks(tracks)
             return
         }
 
@@ -27,7 +28,7 @@ export default function useTopTracks() {
             setLoading(true);
             const spotifyTracks = await getTracks(limit);
             const tracks = spotifyTracks.map(st => spotifyRawToTrack(st.track));
-            cacheTopTracks.current.set(limit, tracks)
+            cacheTopTracks.current.set(limit, { tracks: [...tracks], cachedAt: Date.now() });
             setTopTracks(tracks);
         } catch (e) {
             setTopTracks([]);
@@ -37,8 +38,13 @@ export default function useTopTracks() {
         }
     }
 
+    function refresh(limit) {
+        cacheTopTracks.current.delete(limit)
+        loadTopTracks(limit)
+    }
 
 
-return { topTracks, loadTopTracks, error, loading };
+
+    return { topTracks, loadTopTracks, refresh, error, loading };
 }
 
