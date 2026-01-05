@@ -16,11 +16,9 @@ export default function useTopTracks() {
     async function loadTopTracks(limit = DEFAULT_LIMIT) {
         setError(null);
         
-
-        if (cacheTopTracks.current.has(limit)) {
-            let {tracks,cachedAt} = cacheTopTracks.current.get(limit)
-            setTopTracks([...tracks])
-            setLoading(false);
+        if (cacheTopTracks.current.has(limit) && (Date.now() - cacheTopTracks.current.get(limit).cachedAt) < TTL) {
+            let {tracks} = cacheTopTracks.current.get(limit)
+            setTopTracks(tracks)
             return
         }
 
@@ -28,7 +26,7 @@ export default function useTopTracks() {
             setLoading(true);
             const spotifyTracks = await getTracks(limit);
             const tracks = spotifyTracks.map(st => spotifyRawToTrack(st.track));
-            cacheTopTracks.current.set(limit, {tracks, cachedAt: Date.now()});
+            cacheTopTracks.current.set(limit, {tracks:[...tracks], cachedAt: Date.now()});
             setTopTracks(tracks);
         } catch (e) {
             setTopTracks([]);
