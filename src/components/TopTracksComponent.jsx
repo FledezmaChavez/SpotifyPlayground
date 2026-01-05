@@ -6,7 +6,7 @@ import "../App.css";
 const TOP_TRACKS_LIMITS = [5, 10, 20, 50, 100];
 
 export function TopTracksComponent() {
-    const { topTracks, loadTopTracks, error, loading } = useTopTracks();
+    const { topTracks, loadTopTracks,refresh, error, loading } = useTopTracks();
     const [limit, setLimit] = useState(TOP_TRACKS_LIMITS[0]);
 
     return (
@@ -33,6 +33,16 @@ export function TopTracksComponent() {
                     >
                         {loading ? "Loading Tracks..." : "Get Tracks!"}
                     </button>
+
+                    <button
+                        className="refresh-btn"
+                        onClick={() => {refresh(limit)}}   
+                        disabled={!limit || loading}
+                        title="Bypass cache and fetch fresh data"
+                    >
+                        Refresh
+                    </button>
+
                 </div>
             </div>
 

@@ -441,3 +441,46 @@
 .listScroll::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.22);
 }
+
+.tracks-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* secondary action: looks related to green but less loud */
+.refresh-btn {
+  padding: 8px 16px;
+  border-radius: 10px;
+
+  border: 1px solid rgba(29, 185, 84, 0.55);
+  background: rgba(29, 185, 84, 0.10);
+  color: rgba(232, 238, 246, 0.92);
+
+  font-weight: 700;
+  cursor: pointer;
+
+  transition:
+    background 120ms ease,
+    transform 120ms ease,
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.refresh-btn:hover {
+  background: rgba(29, 185, 84, 0.18);
+  border-color: rgba(29, 185, 84, 0.80);
+  box-shadow: 0 6px 18px rgba(29, 185, 84, 0.18);
+}
+
+.refresh-btn:active {
+  transform: scale(0.97);
+}
+
+.refresh-btn:disabled,
+.primary-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
