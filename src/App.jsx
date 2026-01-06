@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useSpotifySession } from './hooks/useSpotifySession';
 import { WelcomeComponent } from './components/WelcomeComponent';
 import { TopTracksComponent } from './components/TopTracksComponent';
+import { useTheme } from './context/ThemeContext';
 import './App.css'
 
 
@@ -11,6 +12,7 @@ function App() {
 
 
   const [showSaved, setShowSaved] = useState(false);
+  const { theme, setTheme } = useTheme();
 
 
 
@@ -21,8 +23,26 @@ function App() {
 
   return (
     <>
+    
       <main className="page">
+      
+
         <div className="app-column">
+            <div className="theme-toggle">
+         <button
+  onClick={() => setTheme("dark")}
+  className={`theme-btn ${theme === "dark" ? "active" : ""}`}
+>
+  Dark
+</button>
+
+<button
+  onClick={() => setTheme("light")}
+  className={`theme-btn ${theme === "light" ? "active" : ""}`}
+>
+  Light
+</button>
+        </div>
           <section className="card">
 
             <WelcomeComponent user={user} isAuthenticated={isAuthenticated} />
