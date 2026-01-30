@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { getTracks } from "../spotifyAPI";
-import { spotifyRawToTrack } from "../../models/trackMapper";
+import { spotifyRawToTrack } from "../models/trackMapper";
 
 
 const DEFAULT_LIMIT = 5;

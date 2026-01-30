@@ -41,7 +41,7 @@ export function useSpotifySession() {
 
         const hasToken = !!sessionStorage.getItem("spotify_access_token")
         if(!hasToken){
-            setStatus(status.unauthenticated)
+            setStatus(STATUS.unauthenticated)
             return;
         }
 
@@ -52,7 +52,7 @@ export function useSpotifySession() {
         }catch(e){
             if(is401(e)){
                 await refreshAccessToken()
-                const me = getMe()
+                const me = await getMe()
                 setUser(me)
                 setStatus(STATUS.authenticated)
             }else{

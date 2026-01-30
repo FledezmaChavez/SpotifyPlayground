@@ -4,7 +4,7 @@ export function WelcomeComponent({user,isAuthenticated}){
     
  return (
     <>
-    <h1 class="title">
+    <h1 className="title">
             Welcome{user ? `, ${user.display_name}` : ""}
           </h1>
      <p class="subtitle">
