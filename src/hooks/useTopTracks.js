@@ -12,28 +12,54 @@ export default function useTopTracks() {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const cacheTopTracks = useRef(new Map())
+    const inflightTopTracks = useRef(new Map());
+
 
     async function loadTopTracks(limit = DEFAULT_LIMIT) {
         setError(null);
 
-        const cached = cacheTopTracks.current.get(limit)
+        const cached = cacheTopTracks.current.get(limit);
 
         if (cached && (Date.now() - cached.cachedAt) < TTL) {
-            let { tracks } = cached
-            setTopTracks(tracks)
-            return
+            let { tracks } = cached;
+            setTopTracks(tracks);
+            return;
         }
+
+        const inflight = inflightTopTracks.current.get(limit);
+        if(inflight){
+            try{
+                setLoading(true); 
+                const tracks = await inflight; 
+                setTopTracks(tracks)
+            }catch(e){
+                setTopTracks([])
+                setError(e.message || "Failed to load tracks")
+            }finally{
+                setLoading(false)
+            }
+            return;
+        }
+
+        const promise = (async()=>{
+            const spotifyTracks = await getTracks(limit); 
+            const tracks = spotifyTracks.map(st => spotifyRawToTrack(st.track)); 
+            cacheTopTracks.current.set(limit, {tracks: [...tracks], cachedAt: Date.now()}); 
+            return tracks; 
+        })
+
+        inflightTopTracks.current.set(limit, promise)
+
 
         try {
             setLoading(true);
-            const spotifyTracks = await getTracks(limit);
-            const tracks = spotifyTracks.map(st => spotifyRawToTrack(st.track));
-            cacheTopTracks.current.set(limit, { tracks: [...tracks], cachedAt: Date.now() });
+            const tracks = await promise;
             setTopTracks(tracks);
         } catch (e) {
             setTopTracks([]);
             setError(e.message || "Failed to load tracks");
         } finally {
+            inflightTopTracks.current.delete(limit)
             setLoading(false);
         }
     }
