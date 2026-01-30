@@ -535,3 +535,60 @@
   background: rgba(29, 185, 84, 0.18);
   border-color: rgba(29, 185, 84, 0.55);
 }
+
+/* =========================
+   FEATURE TABS (NO ROUTER)
+   ========================= */
+
+.feature-tabs {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.feature-tab {
+  padding: 8px 14px;
+  border-radius: 999px;
+
+  border: 1px solid var(--border-soft);
+  background: var(--control-bg);
+  color: var(--control-text);
+
+  font-weight: 800;
+  cursor: pointer;
+
+  transition: background 120ms ease, transform 120ms ease, border-color 120ms ease;
+}
+
+.feature-tab:hover {
+  background: var(--control-bg-hover);
+}
+
+.feature-tab:active {
+  transform: scale(0.98);
+}
+
+.feature-tab.active {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border-color: rgba(29, 185, 84, 0.9);
+}
+
+.feature-tab:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.panelTitle {
+  padding: 12px 14px;
+  font-weight: 900;
+  background: var(--bg-subtle);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.muted {
+  color: var(--text-muted);
+}

@@ -7,7 +7,7 @@ export function WelcomeComponent({user,isAuthenticated}){
     <h1 className="title">
             Welcome{user ? `, ${user.display_name}` : ""}
           </h1>
-     <p class="subtitle">
+     <p className="subtitle">
             {isAuthenticated
               ? "You’re authenticated. Let’s build something fun."
               : "Authenticate to pull your Spotify profile."}
