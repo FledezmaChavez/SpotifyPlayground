@@ -54,7 +54,7 @@ export default function useTopTracks() {
             const tracks = spotifyTracks.map(st => spotifyRawToTrack(st.track)); 
             cacheTopTracks.current.set(limit, {tracks: [...tracks], cachedAt: Date.now()}); 
             return tracks; 
-        })
+        })()
 
         inflightTopTracks.current.set(limit, promise)
 
@@ -87,4 +87,3 @@ export default function useTopTracks() {
 
     return { topTracks, loadTopTracks, refresh, error, loading };
 }
-
