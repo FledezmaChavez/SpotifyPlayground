@@ -13,9 +13,11 @@ export default function useTopTracks() {
     const [loading, setLoading] = useState(false);
     const cacheTopTracks = useRef(new Map())
     const inflightTopTracks = useRef(new Map());
+    const requestIdRef = useRef(0)
 
 
     async function loadTopTracks(limit = DEFAULT_LIMIT) {
+        const myId = ++requestIdRef.current; 
         setError(null);
 
         const cached = cacheTopTracks.current.get(limit);
@@ -31,12 +33,18 @@ export default function useTopTracks() {
             try{
                 setLoading(true); 
                 const tracks = await inflight; 
-                setTopTracks(tracks)
+                if(myId === requestIdRef.current){
+                    setTopTracks(tracks)
+                }
             }catch(e){
-                setTopTracks([])
-                setError(e.message || "Failed to load tracks")
+                if(myId === requestIdRef.current){
+                    setTopTracks([])
+                    setError(e.message || "Failed to load tracks")
+                }
             }finally{
-                setLoading(false)
+                if(myId === requestIdRef.current){
+                    setLoading(false)
+                }
             }
             return;
         }
@@ -54,13 +62,19 @@ export default function useTopTracks() {
         try {
             setLoading(true);
             const tracks = await promise;
-            setTopTracks(tracks);
+            if(myId === requestIdRef.current){
+                setTopTracks(tracks);
+            }
         } catch (e) {
-            setTopTracks([]);
-            setError(e.message || "Failed to load tracks");
+            if(myId === requestIdRef.current){
+                setTopTracks([]);
+                setError(e.message || "Failed to load tracks");
+            }
         } finally {
             inflightTopTracks.current.delete(limit)
-            setLoading(false);
+            if(myId === requestIdRef.current){
+                setLoading(false);
+            }
         }
     }
 
